@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>WTP</title>
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/zerogrid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
+    <style>
+        @media screen and (max-width: 1550px) {
+            .signinupNav {
+                display: none;
+            }
+            .signinupHeader {
+                display: block;
+            }
+        }
+        
+        @media screen and (min-width:1550px) {
+            .signinupNav {
+                display: block;
+            }
+            .signinupHeader {
+                display: none;
+            }
+        }
+        
+        .left {
+            width: 250px;
+            position: fixed;
+            left: 0;
+            top: 500px;
+            /* margin-top: 15%; */
+            z-index: 999;
+            margin-left: 0;
+            /* float: left; */
+        }
+        
+        .right1 {
+            position: fixed;
+            right: 0;
+            top: 500px;
+            /* margin-top: 15%; */
+            z-index: 999;
+            margin-right: 0;
+            /* float: right; */
+        }
+        /* .ad {
+            width: 250px;
+            height: 500px;
+            border: 1px solid rebeccapurple;
+        } */
+        
+        .tab-left {
+            border-right: 1px solid #9a9ea2;
+        }
+        
+        .tab-right {
+            /* width: 500px; */
+        }
+        
+        .tab-wrap {
+            border: 1px solid #9a9ea2;
+            border-radius: 10px;
+        }
+        
+        .tab-wrap :hover {
+            /* box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25); #c3c8ce*/
+        }
+        
+        .tab-left h1 {
+            display: inline-block;
+            margin-left: 15px;
+            margin-top: -12px;
+            background-color: #fff;
+        }
+        
+        .tab-left h2 {
+            /* position: relative; */
+            margin: 17px auto 30px;
+            /* top: 20%; */
+            text-align: center;
+        }
+        
+        .tab-left-des {
+            margin: 90px auto 30px !important;
+        }
+        
+        .form-group {
+            margin-top: 20px;
+        }
+        
+        .form-group:first-child {
+            /* margin-left: 100px; */
+        }
+        /*         
+        .tab-btn {
+            margin-left: 19%;
+        } */
+        
+        .transTip {
+            margin-left: 49%;
+        }
+        
+        .tranTipCon {
+            margin-bottom: 10px;
+        }
+        
+        .tabType {
+            margin-top: 20px;
+        }
+        
+        .tabType input:nth-child(3) {
+            margin-left: 10px !important;
+        }
+        
+        .actDone {
+            margin-top: 0 !important;
+            margin-right: 0 !important;
+        }
+        
+        .actDetail {
+            margin-top: -20px;
+        }
+        
+        .wrapBorder {
+            width: 2000px;
+            border-left: 6px solid orange;
+            padding-left: 10px;
+            padding-top: 5px;
+        }
+        
+        .tab-left-noborder {
+            border: none !important;
+        }
+        
+        .activefileUser {
+            color: black!important;
+        }
+        
+        .arrow {
+            border: 9px solid transparent;
+            border-bottom-color: #3DA0DB;
+            width: 0px;
+            height: 0px;
+            top: 0px
+        }
+        
+        .stick {
+            width: 8px;
+            height: 14px;
+            border-radius: 1px;
+            background-color: #3DA0DB;
+            top: 15px;
+        }
+        
+        #back_top div {
+            position: absolute;
+            margin: auto;
+            right: 0px;
+            left: 0px;
+        }
+        
+        #back_top {
+            background-color: #dddddd;
+            height: 38px;
+            width: 38px;
+            border-radius: 3px;
+            display: block;
+            cursor: pointer;
+            position: fixed;
+            right: 50px;
+            bottom: 100px;
+            display: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+
+<script>
+    document.addEventListener('readystatechange', function() {
+        console.log('document ' + document.readyState);
+        var arrCookie = document.cookie.split('@');
+
+        if (arrCookie[0].length != 0) {
+            var objUser = JSON.parse(arrCookie[0]);
+            // if (JSON.parse(document.cookie).userLog == 1) {
+
+            if (objUser.userLog == 1) {
+                var area = document.getElementById("signAreaNav");
+                area.innerHTML = "<i class = 'bi bi-file-person' ></i> <a class='fileUser activefileUser' href='profile.html'>" + objUser.uName + "</a >";
+                var dropArea = document.getElementById("dropAccount");
+                dropArea.innerHTML = "<button type='button' class='btn btn-primary' onclick='toProfile()'>" + objUser.uName + "</button>";
+            }
+        }
+    })
+</script>
+<script>
+    $(function() {
+
+        $(window).scroll(function() { //只要窗口滚动,就触发下面代码
+
+            var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度
+
+            if (scrollt > 200) { //判断滚动后高度超过200px,就显示
+
+                $("#back_top").fadeIn(400); //淡入
+
+            } else {
+
+                $("#back_top").stop().fadeOut(400); //如果返回或者没有超过,就淡出.必须加上stop()停止之前动画,否则会出现闪动
+
+            }
+
+        });
+
+        $("#back_top").click(function() { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+
+            $("html,body").animate({
+                scrollTop: "0px"
+            }, 200);
+
+        });
+
+    });
+</script>
+
+<body class="plan-body">
+    <div id="back_top">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+    </div>
+    <div class="wrap-body">
+
+        <!--////////////////////////////////////Header-->
+        <header class="header-plan">
+            <div class="nav-bar">
+                <div class="wrap-nav zerogrid">
+                    <div class="row">
+                        <div class="col-1-3">
+                            <div class="wrap-col">
+                                <!-- <div class="logo"><img src="images/logo.jpg" /></div> -->
+                                <h1>WTP</h1>
+                                <p>Weekend Travel Plan</p>
+                            </div>
+                        </div>
+                        <div class="col-2-3">
+                            <div class="wrap-col f-right">
+                                <div id="menu">
+                                    <nav>
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="archive.html">Blogs</a></li>
+                                            <!-- "single.html" -->
+                                            <li><a href="select.html">Activities</a></li>
+                                            <li class="active"><a href="#">Plan Now</a></li>
+                                            <!-- contact.html -->
+                                            <!-- <li class="log signin"><a href="contact.html">SignIn</a></li>
+                                            <li class="log"><a href="contact.html">SignUp</a></li> -->
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="signinup" id="signArea">
+                    <ul>
+                        <li class="signin"><a href="#">Sign In</a></li>
+                        <a href="contact.html">
+                            <li class="log">Sign Up</a>
+                        </li>
+                    </ul>
+                </div> -->
+                <div class="signinupNav" id="signAreaNav">
+                    <!-- <ul>
+                        <li class="signin"><a href="#" id="signin">SIGN IN</a></li>
+                        <a href="contact.html">
+                            <li class="log">SIGN UP
+                            </li>
+                        </a>
+                    </ul> -->
+                </div>
+
+            </div>
+        </header>
+
+
+        <!--////////////////////////////////////Container-->
+        <section id="container">
+            <div id="main-content">
+                <div class="wrap-container ">
+                    <!-----------------content-box-1-------------------->
+                    <div class="dropdown dropleft float-right signinupHeader" id="dropAccount">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Account
+                      </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" id="signinHeader">Sign In</a>
+                            <a class="dropdown-item" href="contact.html">Sign Up</a>
+                        </div>
+                    </div>
+                    <!-----------------content-box-2-------------------->
+                    <div class="container wrapBorder">
+
+                        <section class="content-box boxstyle-2 box-6 ">
+                            <div class="container">
+                                <div class="row tab-wrap">
+                                    <div class="col-sm-3 col-md-6 col-lg-4 tab-left">
+                                        <h1>1</h1>
+                                        <h2> Select location</h2>
+                                    </div>
+                                    <div class="col-sm-9 col-md-6 col-lg-8 tab-right">
+                                        <!-- <p>Tell us the place...</p> -->
+                                        <form action="/action_page.php">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="inputCity">City</label>
+                                                    <input type="text" class="form-control" id="inputCity">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="inputRegion">Region</label>
+                                                    <select id="inputRegion" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>Kowloon</option>
+                                            <option>New Territory</option>
+                                            <option>Hong Kong Island</option>
+                                          </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="container tranTipCon">
+                            <i class="bi bi-chevron-double-down transTip"></i>
+                        </div>
+                        <section class="content-box boxstyle-2 box-6 ">
+                            <div class="container">
+                                <div class="row tab-wrap">
+                                    <div class="col-sm-3 col-md-6 col-lg-4 tab-left">
+                                        <h1>2 </h1>
+                                        <h2> Choose type</h2>
+                                    </div>
+                                    <div class="col-sm-9 col-md-6 col-lg-8 tab-right">
+                                        <form action="/action_page.php">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <div class="form-check form-check-inline tabType">
+                                                        <input class="form-check-input" type="radio" name="actType" id="actTypeIn" value=0>
+                                                        <label class="form-check-label" for="actTypeIn">Indoor</label>
+                                                        <input class="form-check-input" type="radio" name="actType" id="actTypeOut" value=1>
+                                                        <label class="form-check-label" for="actTypeOut">Outdoor</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="container tranTipCon">
+                            <i class="bi bi-chevron-double-down transTip"></i>
+                        </div>
+                        <section class="content-box boxstyle-2 box-6 ">
+                            <div class="container">
+                                <div class="row tab-wrap">
+                                    <div class="col-sm-3 col-md-6 col-lg-4 tab-left">
+                                        <h1>3 </h1>
+                                        <h2 class="tab-left-des"> Describe it</h2>
+                                    </div>
+                                    <div class="col-sm-9 col-md-6 col-lg-8 tab-right">
+                                        <form action="/action_page.php">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="inputName">Give it a name</label>
+                                                    <input type="text" class="form-control" id="inputName">
+                                                </div>
+                                            </div>
+                                            <div class="form-row actDetail">
+                                                <div class="form-group col-md-4">
+                                                    <label for="inputActDes">What is it?</label>
+                                                    <select id="inputActDes" class="form-control">
+                                                <option selected>Choose...</option>
+                                                <option>Movies</option>
+                                                <option>Gym</option>
+                                                <option>Archery</option>
+                                                <option>Fishing</option>
+                                                <option>Hiking</option>
+                                            </select>
+                                                </div>
+                                            </div>
+                                        </form>
+
+
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Please give some details...</label>
+                                            <textarea id="txtDetails" style="resize: none;" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="container tranTipCon">
+                            <i class="bi bi-chevron-double-down transTip"></i>
+                        </div>
+                        <section class="content-box boxstyle-2 box-6 ">
+                            <div class="container">
+                                <div class="row tab-wrap">
+                                    <div class="col-sm-3 col-md-6 col-lg-4 tab-left">
+                                        <h1>4 </h1>
+                                        <h2> Date & Others</h2>
+                                    </div>
+                                    <div class="col-sm-9 col-md-6 col-lg-8 tab-right">
+                                        Date:<input type="date" id="tabDateTime">
+                                        <label for="sel1" class="form-label">Select list (select one):</label>
+                                        <select class="form-select" id="sel1" name="sellist1" style="display: inline-block; width: 200px;">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                  </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+
+
+                    </div>
+                    <div class="container ">
+                        <!-- <section class="content-box boxstyle-2 box-6 "> -->
+                        <div class="container tranTipCon">
+                            <i class="bi bi-chevron-double-down transTip"></i>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block tab-btn" data-toggle="modal" data-target="#myModal" onclick="collectData()">
+                                Publish 
+                              </button>
+                        <!-- </section> -->
+                    </div>
+                    <!-----------------content-box-3-------------------->
+                </div>
+            </div>
+        </section>
+
+        <!--////////////////////////////////////Footer-->
+        <footer>
+            <div class="zerogrid">
+                <div class="wrap-footer">
+                    <div class="row">
+                        <div class="col-3-5">
+                            <div class="wrap-col">
+                                <div class="logo">
+                                    <!-- <a href="#"><img src="images/logo2.png" /></a> -->
+                                    <a href="#">
+                                        <div class="footer-logo">
+                                            <p>WTP</p>
+                                            <p>Weekend Travel Plan</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <p>Finding friends & groups for weekend entertainments. In here you get rid of the routine work and enjoy the best life ever.</p>
+                                <!-- <p>facere possimus nihil impedit quo minus id quod maxime placeat facere possimus.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-1-3">
+                            <div class="wrap-col">
+                                <div class="widget-title">
+                                    <h5>News Letter</h5>
+                                </div>
+                                <p>Find ways to keep track of our services and other people? Just leave an email address and the subscription will be done.</p>
+                                <div class="subcribe-form">
+                                    <form method="get" action="/search" id="subcribe">
+                                        <input name="q" type="text" size="40" placeholder="Enter your email address...  " />
+                                    </form>
+                                </div>
+                                <a class="button button03" href="#">Subcribe Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-footer">
+                <div class="wrap-bottom">
+                    <div class="copyright">
+                        Copyright &copy; 2021 WTP. All rights reserved.</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Activity Information</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table class="table table-bordered" id="modalTable">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="submit()">Yes!</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function() {
+        $("#myModal").on('hide.bs.modal', function() {
+            var table = document.getElementById("modalTable"); //取得表格
+            table.innerHTML = '';
+        });
+    });
+
+    //提交更改
+    function submit() {
+        //获取模态框数据
+        var obj = new Object();
+        obj.actCity = $("#inputCity").val();
+        obj.actRegion = $("#inputRegion").val();
+        obj.actType = $("input[name='actType']:checked").val();
+        obj.actName = $("#inputName").val();
+        obj.actDes = $("#inputActDes").val();
+        obj.actDetail = $("#txtDetails").val();
+        obj.actDate = $("#tabDateTime").val();
+        obj.actSel = $("#sel1").val();
+        obj.actJoined = 0;
+
+        //create cookie
+        // document.cookie = aInput[0] + '|' + aInput[1] + '|' + bInput[0] + '|' + cInput[0] + '|' + cInput[1] + '|' + dInput[0] + '|' + dInput[1] + '|' + '1';
+        var arrCookieAll = document.cookie.split('@');
+        var objPub = JSON.parse(arrCookieAll[1]);
+        objPub.push(obj);
+
+        document.cookie = "";
+        document.cookie = arrCookieAll[0] + "@" + JSON.stringify(objPub) + "@" + arrCookieAll[2];
+
+        //document.cookie is a string, using split() function to get cookie date in array form 
+        //processing data in cookie
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "https://localhost:44301/weatherforecast/WriteActiviyRecord",
+        //     data: "CITY=" + stuno + "&TYPE=" + pass + "&DESCRIPTION=" + name, //+ "&sex=" + sex,
+        //     dataType: 'JSON',
+        //     contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        //     success: function(result) {
+        //         //location.reload();
+        //     }
+        // });
+        alert("Successfully Published!");
+    }
+
+    function collectData() {
+        var aInput = new Array();
+        var bInput = new Array();
+        var cInput = new Array();
+        var dInput = new Array();
+        var arrAll = new Array();
+        var arrTitle = ["Location", "Type", "Description", "Date & Others"];
+
+        aInput[0] = $("#inputCity").val();
+        aInput[1] = $("#inputRegion").val();
+
+        bInput[0] = $("input[name='actType']:checked").val();
+
+        cInput[0] = $("#inputActDes").val();
+        cInput[1] = $("#txtDetails").val();
+
+        dInput[0] = $("#tabDateTime").val();
+        dInput[1] = $("#sel1").val();
+
+        arrAll = [aInput, bInput, cInput, dInput];
+        var table = document.getElementById("modalTable"); //取得表格
+
+        for (var i = 0; i < arrTitle.length; i++) {
+            var oTr = document.createElement('tr'); //给该表格创建tr节点
+            table.appendChild(oTr); //创建table的子节点tr
+
+            for (var j = 0; j < 2; j++) {
+                var oTd = document.createElement('td'); //创建td节点
+                if (j == 0) {
+                    oTd.innerHTML = arrTitle[i]; //给创建的td节点赋值
+                } else {
+                    oTd.colSpan = 2;
+                    for (var k = 0; k < arrAll[i].length; k++) {
+                        oTd.innerHTML += arrAll[i][k] + "," //给创建的td节点赋值
+                    }
+                }
+                oTr.appendChild(oTd); //将创建的td交给oTr节点tr
+            }
+        }
+    }
+</script>
+
+</html>

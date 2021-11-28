@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>WTP</title>
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/zerogrid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        @media screen and (max-width: 1550px) {
+            .signinupNav {
+                display: none;
+            }
+            .signinupHeader {
+                display: block;
+            }
+        }
+        
+        @media screen and (min-width:1550px) {
+            .signinupNav {
+                display: block;
+            }
+            .signinupHeader {
+                display: none;
+            }
+        }
+        
+        .left {
+            width: 250px;
+            position: fixed;
+            left: 0;
+            top: 500px;
+            z-index: 999;
+            margin-left: 0;
+        }
+        
+        .right1 {
+            position: fixed;
+            right: 0;
+            top: 500px;
+            z-index: 999;
+            margin-right: 0;
+        }
+        /* .ad {
+            width: 250px;
+            height: 500px;
+            border: 1px solid rebeccapurple;
+        } */
+        
+        .activefileUser {
+            color: black!important;
+        }
+        
+        .img-box {
+            display: inline-block;
+            border: 1px solid black;
+            position: relative
+        }
+        
+        .image-remove1 {
+            font-size: 30px;
+            width: 15px;
+            height: 15px;
+            text-align: center;
+            border-radius: 100%;
+            /* transform: rotate(45deg); */
+            cursor: pointer;
+            top: 8px;
+            right: 2px;
+            display: block;
+            position: absolute;
+        }
+        
+        .image-remove2 {
+            font-size: 30px;
+            width: 15px;
+            height: 15px;
+            text-align: center;
+            border-radius: 100%;
+            /* transform: rotate(45deg); */
+            cursor: pointer;
+            top: 2px;
+            left: 2px;
+            display: block;
+            position: absolute;
+        }
+        
+        .image-remove1:hover,
+        .image-remove2:hover {
+            /* background-color: #fff; */
+            transform: rotate(180deg);
+            transition: all 0.5s;
+        }
+        
+        .btnMod {
+            /* text-align: center; */
+            /* display: block; */
+            margin: 0 auto !important;
+        }
+        
+        .intextYour {
+            color: #FE9B13;
+        }
+        
+        .intextYour:hover {
+            color: #fe9c13a8;
+            transition: all 0.3s;
+        }
+        
+        .arrow {
+            border: 9px solid transparent;
+            border-bottom-color: #3DA0DB;
+            width: 0px;
+            height: 0px;
+            top: 0px
+        }
+        
+        .stick {
+            width: 8px;
+            height: 14px;
+            border-radius: 1px;
+            background-color: #3DA0DB;
+            top: 15px;
+        }
+        
+        #back_top div {
+            position: absolute;
+            margin: auto;
+            right: 0px;
+            left: 0px;
+        }
+        
+        #back_top {
+            background-color: #dddddd;
+            height: 38px;
+            width: 38px;
+            border-radius: 3px;
+            display: block;
+            cursor: pointer;
+            position: fixed;
+            right: 50px;
+            bottom: 100px;
+            display: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<script>
+    document.addEventListener('readystatechange', function() {
+        console.log('document ' + document.readyState);
+        var arrCookie = document.cookie.split('@');
+
+        if (arrCookie[0].length != 0) {
+            var objUser = JSON.parse(arrCookie[0]);
+            // if (JSON.parse(document.cookie).userLog == 1) {
+
+            if (objUser.userLog == 1) {
+                var area = document.getElementById("signAreaNav");
+                area.innerHTML = "<i class = 'bi bi-file-person' ></i> <a class='fileUser activefileUser' href='profile.html'>" + objUser.uName + "</a >";
+                var dropArea = document.getElementById("dropAccount");
+                dropArea.innerHTML = "<button type='button' class='btn btn-primary' onclick='toProfile()'>" + objUser.uName + "</button>";
+            }
+        }
+    })
+
+    function removeImage(opt) {
+        if (opt == 1) {
+            document.getElementById("adLef").style.display = "none";
+        } else {
+            document.getElementById("adRigh").style.display = "none";
+        }
+    }
+
+    window.onresize = function() {
+        if (window.innerWidth < 1550) {
+            // alert("asdas");
+            var arrCookie = document.cookie.split('@');
+            if (arrCookie[0].length != 0) {
+                var objUser = JSON.parse(arrCookie[0]);
+
+                if (objUser.userLog == 1) {
+                    var dropArea = document.getElementById("dropAccount");
+                    dropArea.innerHTML = "<button type='button' class='btn btn-primary' onclick='toProfile()'>" + objUser.uName + "</button>";
+                }
+            }
+        }
+    }
+
+    function toProfile() {
+        window.location = "profile.html";
+    }
+
+    $(function() {
+        for (var i = 0; i < 100; i++) {
+            $("#article").append("<p>xxxxxxxxxx<br></p>")
+        }
+
+    })
+</script>
+<script>
+    $(function() {
+
+        $(window).scroll(function() { //只要窗口滚动,就触发下面代码
+
+            var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度
+
+            if (scrollt > 200) { //判断滚动后高度超过200px,就显示
+
+                $("#back_top").fadeIn(400); //淡入
+
+            } else {
+
+                $("#back_top").stop().fadeOut(400); //如果返回或者没有超过,就淡出.必须加上stop()停止之前动画,否则会出现闪动
+
+            }
+
+        });
+
+        $("#back_top").click(function() { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+
+            $("html,body").animate({
+                scrollTop: "0px"
+            }, 200);
+
+        });
+
+    });
+</script>
+
+<body>
+    <div id="back_top">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+    </div>
+    <!-- <div class="left ad">
+        <img src="images/adl.jpg">
+    </div>
+    <div class="right1 ad">
+        <img src="images/adr.jpg">
+    </div> -->
+
+    <div class="left" id="adLef">
+        <div class="img-box">
+            <img src="images/adl.jpg" class="cover-img">
+            <span class="image-remove1" onclick="removeImage(1)"><img src="./img/kill.png" alt="..."></span>
+        </div>
+    </div>
+    <div class="right1" id="adRigh">
+        <div class="img-box">
+            <img src="images/adr.jpg" class="cover-img">
+            <span class="image-remove2" onclick="removeImage(2)"><img src="./img/kill.png" alt=".."></span>
+        </div>
+    </div>
+
+    <div class="wrap-body">
+        <!--////////////////////////////////////Header-->
+        <header>
+            <div class="nav-bar">
+                <div class="wrap-nav zerogrid">
+                    <div class="row">
+                        <div class="col-1-3">
+                            <div class="wrap-col">
+                                <!-- <div class="logo"><img src="images/logo.jpg" /></div> -->
+                                <h1>WTP</h1>
+                                <p>Weekend Travel Plan</p>
+                            </div>
+                        </div>
+                        <div class="col-2-3">
+                            <div class="wrap-col f-right">
+                                <div id="menu">
+                                    <nav>
+                                        <ul>
+                                            <li class="active"><a href="#">Home</a></li>
+                                            <li><a href="archive.html">Blogs</a></li>
+                                            <li><a href="select.html">Activities</a></li>
+                                            <li><a href="#" onclick="checkLog()">Plan Now</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="signinupNav" id="signAreaNav">
+                    <ul>
+                        <li class="signin"><a href="#" id="signin">SIGN IN</a></li>
+                        <a href="contact.html">
+                            <li class="log">SIGN UP
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+            <div class="wrap-header">
+                <!-- <div class="signinupHeader" id="signAreaHeader">
+                    <ul>
+                        <li class="signinHeader"><a href="#" id='signinHeader'>Sign In</a></li>
+                        <a href="contact.html">
+                            <li class="log">Sign Up</li>
+                        </a>
+                    </ul>
+                </div> -->
+                <div class="dropdown dropleft float-right signinupHeader" id="dropAccount">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Account
+                      </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" id="signinHeader">Sign In</a>
+                        <a class="dropdown-item" href="contact.html">Sign Up</a>
+                    </div>
+                </div>
+                <h1>see the city differently</h1>
+                <span>Finding friends/groups for weekend entertainments</span>
+                <!-- <center>
+                    <div class="search-form ">
+                        <form method="get " action="/search " id="search " class="f-right ">
+                            <input name="q " type="text " size="40 " placeholder="Where are you going ? " />
+                            <input type="submit " name="Submit " value="Search ">
+                        </form>
+                    </div>
+                </center> -->
+                <center>
+                    <div class="search-form">
+                        <form method="get" action="/search" id="search" class="f-right">
+                            <input name="q" type="text" size="40" placeholder="Where are you going ?" />
+                            <input type="submit" name="Submit" value="Search">
+                        </form>
+                    </div>
+                </center>
+                <div id="top-destination ">
+                    <nav>
+                        <ul>
+                            <li class="first ">
+                                <p>Top Destination :</p>
+                            </li>
+                            <li><a href="# ">Central</a></li>
+                            <li><a href="# ">Causeway Bay</a></li>
+                            <li><a href="# ">Tsim Sha Tsui</a></li>
+                            <li><a href="# ">Cheung Chau</a></li>
+                            <li><a href="# ">Mong Kok</a></li>
+                            <li class="last "><a href="# ">More...</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+
+        <!--////////////////////////////////////Container-->
+        <section id="container">
+            <div class="wrap-container ">
+                <!-----------------content-box-1-------------------->
+                <section class="content-box boxstyle-2 box-2 ">
+                    <div class="zerogrid ">
+                        <div class="row wrap-box aboutMod ">
+                            <!--Start Box-->
+                            <div class="header ">
+                                <div class="wrapper ">
+                                    <h2>ABOUT US</h2>
+                                    <div class="line "></div>
+                                    <p>Help you have a perfect weekend. Here you can choose where you want to go, and you can find friends like you.</p>
+                                </div>
+                            </div>
+                            <div class="row post ">
+                                <div class="col-1-3 ">
+                                    <div class="wrap-col ">
+                                        <center>
+                                            <div class="wrap-img1 ">
+                                                <img src="images/Folded.png " />
+                                            </div>
+                                        </center>
+                                        <h3><a href="# ">Promotional Information</a></h3>
+                                        <p>Get the latest discount plan</p>
+                                    </div>
+                                </div>
+                                <div class="col-1-3 ">
+                                    <div class="wrap-col ">
+                                        <center>
+                                            <div class="wrap-img1 ">
+                                                <img src="images/Location.png " />
+                                            </div>
+                                        </center>
+                                        <h3><a href="# ">Scenic spot</a></h3>
+                                        <p>Recommend the most popular tourist attractions</p>
+                                    </div>
+                                </div>
+                                <div class="col-1-3 ">
+                                    <div class="wrap-col ">
+                                        <center>
+                                            <div class="wrap-img1 ">
+                                                <img src="images/User.png " />
+                                            </div>
+                                        </center>
+                                        <h3><a href="# ">Make friends</a></h3>
+                                        <p>Let you find like-minded friends</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="button button01 btnMod " href="# " onclick="checkLog() ">PLAN NOW</a>
+
+                        </div>
+                    </div>
+                </section>
+                <!-----------------content-box-2-------------------->
+
+                <section class="content-box boxstyle-3 box-5 ">
+                    <div class="zerogrid ">
+                        <div class="row wrap-box ">
+                            <!--Start Box-->
+                            <p>Whether it's outdoor or indoor, you'll enjoy the best weekend with <span><a href="# " onclick="checkUser() " class="intextYour" > YOUR</a></span> friends.</p>
+                        </div>
+                    </div>
+                </section>
+                <!-----------------content-box-3-------------------->
+                <section class="content-box boxstyle-2 box-6 ">
+                    <div class="zerogrid">
+                        <div class="row wrap-box ">
+                            <!--Start Box-->
+                            <div class="col-2-3 ">
+                                <div class="row post ">
+                                    <div class="col-1-2 ">
+                                        <div class="wrap-col ">
+                                            <div class=" ">
+                                                <a href="# "><img src="images/16.jpg " /></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1-2 ">
+                                        <div class="wrap-col ">
+                                            <h3><a href="# ">Disney </a></h3>
+                                            <div class="upload ">By <a href="# ">Tokyo</a> on April 15, 2019</div>
+                                            <p>Hong Kong Disneyland is a Disneyland on Lantau Island in the new territories. It is located in Penny's Bay on Lantau Island in the southeast of Hong Kong.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row widget ">
+                                    <div class="col-1-3 ">
+                                        <div class="col-ful ">
+                                            <div class="wrap-col ">
+                                                <a href="# "><img src="images/17.jpg " /></a>
+                                                <h4><a href="# ">Outdoor tennis </a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1-3 ">
+                                        <div class="col-ful ">
+                                            <div class="wrap-col ">
+                                                <a href="# "><img src="images/10.jpg " /></a>
+                                                <h4><a href="# ">Maclehose trail </a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1-3 ">
+                                        <div class="col-ful ">
+                                            <div class="wrap-col ">
+                                                <a href="# "><img src="images/8.jpg " /></a>
+                                                <h4><a href="# ">Aqua Spirit </a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1-3 ">
+                                <div class="widget wid-meta ">
+                                    <div class="wrap-col ">
+                                        <div class="widget-title ">
+                                            <h5>Latest News</h5>
+                                        </div>
+                                        <div class="wid-content ">
+                                            <div class="row ">
+                                                <ul>
+                                                    <li><a href="# ">> Disney annual ticket promotion.</a></li>
+                                                    <li><a href="# ">> New！Script kill central store.</a></li>
+                                                    <li><a href="# ">> Saigon yacht party registration.</a></li>
+                                                    <li><a href="# ">> Wargame! Limited time registration</a></li>
+                                                    <li><a href="# ">> Tsim Sha Tsui Art Exhibition.</a></li>
+                                                    <li><a href="# ">> New experience of wave surfing.</a></li>
+                                                    <li><a href="# ">> Ocean Park Halloween.</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!--////////////////////////////////////Footer-->
+        <footer>
+            <div class="zerogrid ">
+                <div class="wrap-footer ">
+                    <div class="row ">
+                        <div class="col-3-5 ">
+                            <div class="wrap-col ">
+                                <div class="logo ">
+                                    <!-- <a href="# "><img src="images/logo2.png " /></a> -->
+                                    <a href="# ">
+                                        <div class="footer-logo ">
+                                            <p>WTP</p>
+                                            <p>Weekend Travel Plan</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <p>Finding friends & groups for weekend entertainments. In here you get rid of the routine work and enjoy the best life ever.</p>
+                                <!-- <p>facere possimus nihil impedit quo minus id quod maxime placeat facere possimus.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-1-3 ">
+                            <div class="wrap-col ">
+                                <div class="widget-title ">
+                                    <h5>News Letter</h5>
+                                </div>
+                                <p>Find ways to keep track of our services and other people? Just leave an email address and the subscription will be done.</p>
+                                <div class="subcribe-form">
+                                    <form method="get" action="/search" id="subcribe">
+                                        <input name="q" type="text" size="40 " placeholder="Enter your email address... " />
+                                    </form>
+                                </div>
+                                <a class="button button03" href="# ">Subcribe Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-footer ">
+                <div class="wrap-bottom ">
+                    <div class="copyright ">
+                        Copyright &copy; 2021 WTP. All rights reserved.</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade " id="tipModal">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content ">
+                <!-- Modal Header -->
+                <div class="modal-header ">
+                    <h4 class="modal-title ">Please Sign In!</h4>
+                    <button type="button " class="close " data-dismiss="modal ">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <!-- <div class="modal-body ">
+                    Please Sign In!
+                </div> -->
+                <!-- Modal footer -->
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal " id="logModal">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content ">
+
+                <!-- Modal Header -->
+                <div class="modal-header ">
+                    <h4 class="modal-title ">Modal Heading</h4>
+                    <button type="button " class="close " data-dismiss="modal ">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body ">
+                    <div class="form-group ">
+                        <label for="email ">Username:</label>
+                        <div class="userName">
+                            <input type="text" class="form-control " id="accountName" placeholder="... " name="email ">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="pwd ">Password:</label>
+                        <input type="password" class="form-control " id="password" placeholder="... " name="pswd ">
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-primary " onclick="checkInfo() ">Confirm</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function() {
+        $("#signin").click(function() {
+            $("#logModal").modal();
+        });
+        $("#signinHeader").click(function() {
+            $("#logModal").modal();
+        });
+    });
+
+    function checkLog() {
+        var arrCookie = document.cookie.split('@');
+        if (arrCookie[0].length == 0) {
+            $("#tipModal").modal("show");
+        } else {
+            var objUser = JSON.parse(arrCookie[0]);
+
+            if (objUser.userLog == 0) {
+                $("#tipModal").modal("show");
+            } else {
+                window.location = "Plan.html ";
+            }
+        }
+    }
+
+    function checkInfo() {
+        var accountName = $("#accountName"),
+            $password = $("#password");
+        var accountName = accountName.val(),
+            password = $password.val();
+        if (!accountName || accountName == " ") {
+            alert("请输入用户名 ");
+            // form.accountName.focus();
+            return false;
+        }
+        if (!password || password == " ") {
+            alert("请输入密码 ");
+            // form.password.focus();
+            return false;
+        }
+
+        if (document.cookie.length == 0) {
+            alert("No such user, please register first! ")
+        } else {
+            var arrCookie = document.cookie.split('@');
+            var objUser = JSON.parse(arrCookie[0]);
+
+            if (accountName == objUser.uName && password == objUser.pwd) {
+                objUser.userLog = 1;
+                document.cookie = JSON.stringify(objUser) + "@ " + arrCookie[1] + "@ " + arrCookie[2];
+                location.reload()
+            } else {
+                alert("用户名或密码错误！ ");
+                return false;
+            }
+        }
+        // document.cookie += "uName=" + userName + " & " + "pwd=" + pwd;
+    }
+
+    function checkUser() {
+        var arrCookie = document.cookie.split('@');
+        if (arrCookie[0].length == 0) {
+            $("#tipModal").modal("show");
+        } else {
+            var objUser = JSON.parse(arrCookie[0]);
+
+            if (objUser.userLog == 0) {
+                $("#tipModal").modal("show");
+            } else {
+                window.location = "profile.html ";
+            }
+        }
+    }
+</script>
+
+</html>
+<!-- o={actDate: "2021-11-23 ",
+actDes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim&amp;&amp; ",
+actMoney: "&nbsp;&nbsp; $ 25.00 - 50.00 ",
+actName: "Pancakes n ' Such",
+actPicsA: "<img src=\"./img/desktop.jpg\" class=\"img-thumbnail\" alt=\"...\">",
+actPicsB: "<img src=\"./img/desktop.jpg\" class=\"img-thumbnail\" alt=\"...\">",
+actPicsC: "<img src=\"./img/desktop.jpg\" class=\"img-thumbnail\" alt=\"...\">",
+actType: "Indoor} -->

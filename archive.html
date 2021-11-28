@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>WTP</title>
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/zerogrid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        @media screen and (max-width: 1550px) {
+            .signinupNav {
+                display: none;
+            }
+            .signinupHeader {
+                display: block;
+            }
+        }
+        
+        @media screen and (min-width:1550px) {
+            .signinupNav {
+                display: block;
+            }
+            .signinupHeader {
+                display: none;
+            }
+        }
+        
+        .activefileUser {
+            color: black!important;
+        }
+        
+        .arrow {
+            border: 9px solid transparent;
+            border-bottom-color: #3DA0DB;
+            width: 0px;
+            height: 0px;
+            top: 0px
+        }
+        
+        .stick {
+            width: 8px;
+            height: 14px;
+            border-radius: 1px;
+            background-color: #3DA0DB;
+            top: 15px;
+        }
+        
+        #back_top div {
+            position: absolute;
+            margin: auto;
+            right: 0px;
+            left: 0px;
+        }
+        
+        #back_top {
+            background-color: #dddddd;
+            height: 38px;
+            width: 38px;
+            border-radius: 3px;
+            display: block;
+            cursor: pointer;
+            position: fixed;
+            right: 50px;
+            bottom: 100px;
+            display: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<script>
+    document.addEventListener('readystatechange', function() {
+        console.log('document ' + document.readyState);
+        var arrCookie = document.cookie.split('@');
+
+        if (arrCookie[0].length != 0) {
+            var objUser = JSON.parse(arrCookie[0]);
+            // if (JSON.parse(document.cookie).userLog == 1) {
+
+            if (objUser.userLog == 1) {
+                var area = document.getElementById("signAreaNav");
+                area.innerHTML = "<i class = 'bi bi-file-person' ></i> <a class='fileUser activefileUser' href='profile.html'>" + objUser.uName + "</a >";
+                var dropArea = document.getElementById("dropAccount");
+                dropArea.innerHTML = "<button type='button' class='btn btn-primary' onclick='toProfile()'>" + objUser.uName + "</button>";
+            }
+        }
+    })
+
+    window.onresize = function() {
+        if (window.innerWidth < 1550) {
+            // alert("asdas");
+            var arrCookie = document.cookie.split('@');
+            if (arrCookie[0].length != 0) {
+                var objUser = JSON.parse(arrCookie[0]);
+
+                if (objUser.userLog == 1) {
+                    var dropArea = document.getElementById("dropAccount");
+                    dropArea.innerHTML = "<button type='button' class='btn btn-primary' onclick='toProfile()'>" + objUser.uName + "</button>";
+                }
+            }
+        }
+    }
+
+    function toProfile() {
+        window.location = "profile.html";
+    }
+</script>
+<script>
+    $(function() {
+
+        $(window).scroll(function() { //只要窗口滚动,就触发下面代码
+
+            var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度
+
+            if (scrollt > 200) { //判断滚动后高度超过200px,就显示
+
+                $("#back_top").fadeIn(400); //淡入
+
+            } else {
+
+                $("#back_top").stop().fadeOut(400); //如果返回或者没有超过,就淡出.必须加上stop()停止之前动画,否则会出现闪动
+
+            }
+
+        });
+
+        $("#back_top").click(function() { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+
+            $("html,body").animate({
+                scrollTop: "0px"
+            }, 200);
+
+        });
+
+    });
+</script>
+
+<body id="archive">
+    <div class="wrap-body">
+        <!--////////////////////////////////////Header-->
+        <div id="back_top">
+            <div class="arrow"></div>
+            <div class="stick"></div>
+        </div>
+        <!--////////////////////////////////////Header-->
+        <header class="header-plan">
+            <div class="nav-bar">
+                <div class="wrap-nav zerogrid">
+                    <div class="row">
+                        <div class="col-1-3">
+                            <div class="wrap-col">
+                                <!-- <div class="logo"><img src="images/logo.jpg" /></div> -->
+                                <h1>WTP</h1>
+                                <p>Weekend Travel Plan</p>
+                            </div>
+                        </div>
+                        <div class="col-2-3">
+                            <div class="wrap-col f-right">
+                                <div id="menu">
+                                    <nav>
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li class="active"><a href="archive.html">Blogs</a></li>
+                                            <!-- "single.html" -->
+                                            <li><a href="select.html">Activities</a></li>
+                                            <li><a href="#" onclick="checkLog()">Plan Now</a></li>
+                                            <!-- contact.html -->
+                                            <!-- <li class="log signin"><a href="contact.html">SignIn</a></li>
+                                            <li class="log"><a href="contact.html">SignUp</a></li> -->
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="signinup" id="signArea">
+                    <ul>
+                        <li class="signin"><a href="#" id='signin'>Sign In</a></li>
+                        <a href="contact.html">
+                            <li class="log">Sign Up</a>
+                        </li>
+                    </ul>
+                </div> -->
+                <div class="signinupNav" id="signAreaNav">
+                    <ul>
+                        <li class="signin"><a href="#" id='signin'>SIGN IN</a></li>
+                        <a href="contact.html">
+                            <li class="log">SIGN UP
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+
+            </div>
+        </header>
+
+
+        <!--////////////////////////////////////Container-->
+        <section id="container">
+
+            <div class="wrap-container">
+
+                <div id="main-content">
+
+                    <div class="zerogrid">
+                        <div class="dropdown dropleft float-right signinupHeader" id="dropAccount">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Account
+                              </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" id="signinHeader">Sign In</a>
+                                <a class="dropdown-item" href="contact.html">Sign Up</a>
+                            </div>
+                        </div>
+                        <div class="row wrap-content">
+
+                            <div class="col-1-4">
+                                <div class="wrap-col">
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/color.jpg">
+                                            <div class="art-header">
+                                                <h3>Choi Hung Estate, Kowloon</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>April 14, 2021</p>
+                                                <p>Uploaded by <a href="#">walkietalkie</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/lion.jpg">
+                                            <div class="art-header">
+                                                <h3>Lion Rock, New Territory</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>March 03, 2020</p>
+                                                <p>Uploaded by <a href="#">tiktok</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article style="width:100%">
+                                        <div class="wrap-art">
+                                            <img src="img/hewen.jpeg">
+                                            <div class="art-header">
+                                                <h3>Kart Racing, Ho Man Tin</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>September 11, 2020</p>
+                                                <p>Uploaded by <a href="#">walkietalkie</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/victoria.jpeg">
+                                            <div class="art-header">
+                                                <h3>Victoria Harbour, Hong Kong Island</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>October 01, 2021</p>
+                                                <p>Uploaded by <a href="#">pieceofsh*t</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/Disney.jpg">
+                                            <div class="art-header">
+                                                <h3>Hong Kong DisneyLand, New Territory</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>April 21, 2021</p>
+                                                <p>Uploaded by <a href="#">crazyMonkey</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="col-1-4">
+                                <div class="wrap-col">
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/cityu.png">
+                                            <div class="art-header">
+                                                <h3>City University of Hong Kong, Kowloon</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>June 04, 2021</p>
+                                                <p>Uploaded by <a href="#">hallelujah</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/changzhou.jpg">
+                                            <div class="art-header">
+                                                <h3>Cheung Chau Island, New Territory</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>November 26, 2021</p>
+                                                <p>Uploaded by <a href="#">Jennifer Lau</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/RepulseBay.jpg">
+                                            <div class="art-header">
+                                                <h3>Repulse Bay Area, Hong Kong Island</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>May 05, 2019</p>
+                                                <p>Uploaded by <a href="#">Leo Cheung</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/warg.jpg">
+                                            <div class="art-header">
+                                                <h3>Wargame, Hung Hom</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>December 12, 2021</p>
+                                                <p>Uploaded by <a href="#">NOTAgain?!</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="wrap-art">
+                                            <img src="img/HappyValley.jpg">
+                                            <div class="art-header">
+                                                <h3>Happy Valley, Hong Kong Island</h3>
+                                            </div>
+                                            <div class="art-content">
+                                                <p>Febuary 12, 2021</p>
+                                                <p>Uploaded by <a href="#">John Doe</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="col-1-5">
+                                <div id="sidebar" class="wrap-col">
+                                    <div class="wrap-sidebar">
+                                        <div class="widget">
+                                            <a href="#">
+                                                <div class="wid-about">
+                                                    <p>About us</p>
+                                                </div>
+                                            </a>
+                                            <div class="widget-box wid-tags">
+                                                <div class="widget-title">
+                                                    <h5>Tags</h5>
+                                                </div>
+                                                <div class="widget-content">
+                                                    <a href="#">Choi Hung Estate ,</a>
+                                                    <a href="#">Buildings ,</a>
+                                                    <a href="#">CityU ,</a>
+                                                    <a href="#">Universities ,</a>
+                                                    <a href="#">islands ,</a>
+                                                    <!-- <a href="#">likes ,</a>
+                                                    <a href="#">photo ,</a> -->
+                                                    <a href="#">travel ,</a>
+                                                    <a href="#">video </a>
+                                                </div>
+                                            </div>
+                                            <div class="widget-box wid-news">
+                                                <div class="widget-title">
+                                                    <h5>TRENDING NEWS</h5>
+                                                </div>
+                                                <div class="widget-content">
+                                                    <div class="row">
+                                                        <div class="col-1-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#"><img src="img/tn-coffee.jpg" /></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#">An Cozy Coffee Shop In The Centre Of The City </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-1-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#"><img src="img/tn-fitness.jpg" /></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#">Partner up: The fellowship of fitness </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-1-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#"><img src="img/tn-yoga.jpg" /></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#">Best and worst exercises to do when you have a cold </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-1-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#"><img src="img/tn-hkmarathon.png" /></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3-4">
+                                                            <div class="wrap-col">
+                                                                <a href="#">Standard Chartered Hong Kong Marathon 2021: Run as you like </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-box wid-archives">
+                                                <div class="widget-title">
+                                                    <h5>Archives</h5>
+                                                </div>
+                                                <div class="widget-content">
+                                                    <select>
+														<option value="Year" selected>Year</option>
+														<option value="2021">2021</option>
+														<option value="2020">2020</option>
+														<option value="2019">2019</option>
+													</select>
+                                                    <select>
+														<option value="Month" selected>Month</option>
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+														<option value="6">6</option>
+														<option value="7">7</option>
+														<option value="8">8</option>
+														<option value="9">9</option>
+														<option value="10">10</option>
+														<option value="11">11</option>
+														<option value="12">12</option>
+													</select>
+                                                </div>
+                                            </div>
+                                            <div class="widget-box wid-gallery">
+                                                <div class="widget-title">
+                                                    <h5>Gallery</h5>
+                                                </div>
+                                                <div class="widget-content">
+                                                    <div class="col-1-3">
+                                                        <a href="#"><img src="img/HappyValley.jpg"></a>
+                                                        <a href="#"><img src="img/lion.jpg"></a>
+                                                        <a href="#"><img src="img/color.jpg"></a>
+                                                        <a href="#"><img src="img/cityu.png"></a>
+                                                    </div>
+                                                    <div class="col-1-3">
+                                                        <a href="#"><img src="img/RepulseBay.jpg"></a>
+                                                        <a href="#"><img src="img/tn-yoga.jpg"></a>
+                                                        <a href="#"><img src="img/tn-hkmarathon.png"></a>
+                                                        <a href="#"><img src="img/border.png"></a>
+                                                    </div>
+                                                    <div class="col-1-3">
+                                                        <a href="#"><img src="img/changzhou.jpg"></a>
+                                                        <a href="#"><img src="img/banner.jpg"></a>
+                                                        <a href="#"><img src="img/victoria.jpeg"></a>
+                                                        <a href="#"><img src="img/YauMaTei.jpg"></a>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-box">
+                                                <div class="widget-title">
+                                                    <h5>Meta</h5>
+                                                </div>
+                                                <ul>
+                                                    <li><a href="#">> Discounts</a></li>
+                                                    <li><a href="#">> Events</a></li>
+                                                    <li><a href="#">> Maintenance</a></li>
+                                                    <li><a href="#">> Maps</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--////////////////////////////////////Footer-->
+        <footer>
+            <div class="zerogrid">
+                <div class="wrap-footer">
+                    <div class="row">
+                        <div class="col-3-5">
+                            <div class="wrap-col">
+                                <div class="logo">
+                                    <!-- <a href="#"><img src="images/logo2.png" /></a> -->
+                                    <a href="#">
+                                        <div class="footer-logo">
+                                            <p>WTP</p>
+                                            <p>Weekend Travel Plan</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <p>Finding friends & groups for weekend entertainments. In here you get rid of the routine work and enjoy the best life ever.</p>
+                                <!-- <p>facere possimus nihil impedit quo minus id quod maxime placeat facere possimus.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-1-3">
+                            <div class="wrap-col">
+                                <div class="widget-title">
+                                    <h5>News Letter</h5>
+                                </div>
+                                <p>Find ways to keep track of our services and other people? Just leave an email address and the subscription will be done.</p>
+                                <div class="subcribe-form">
+                                    <form method="get" action="/search" id="subcribe">
+                                        <input name="q" type="text" size="40" placeholder="Enter your email address...  " />
+                                    </form>
+                                </div>
+                                <a class="button button03" href="#">Subcribe Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-footer">
+                <div class="wrap-bottom">
+                    <div class="copyright">
+                        Copyright &copy; 2021 WTP. All rights reserved.</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- The Modal -->
+        <div class="modal fade" id="tipModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Please Sign In!</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <!-- <div class="modal-body">
+                    Please Sign In!
+                </div> -->
+                    <!-- Modal footer -->
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal -->
+        <div class="modal" id="logModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="email">Username:</label>
+                            <div class="userName">
+                                <input type="text" class="form-control" id="accountName" placeholder="..." name="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="password" placeholder="..." name="pswd">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="checkInfo()">Confirm</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    $(document).ready(function() {
+        $("#signin").click(function() {
+            $("#logModal").modal();
+        });
+        $("#signinHeader").click(function() {
+            $("#logModal").modal();
+        });
+    });
+
+    function checkLog() {
+        var arrCookie = document.cookie.split('@');
+        if (arrCookie[0].length == 0) {
+            $("#tipModal").modal("show");
+        } else {
+            var objUser = JSON.parse(arrCookie[0]);
+
+            if (objUser.userLog == 0) {
+                $("#tipModal").modal("show");
+            } else {
+                window.location = "Plan.html";
+            }
+        }
+    }
+
+    function checkInfo() {
+        var accountName = $("#accountName"),
+            $password = $("#password");
+        var accountName = accountName.val(),
+            password = $password.val();
+        if (!accountName || accountName == "") {
+            alert("请输入用户名");
+            // form.accountName.focus();
+            return false;
+        }
+        if (!password || password == "") {
+            alert("请输入密码");
+            // form.password.focus();
+            return false;
+        }
+
+        if (document.cookie.length == 0) {
+            alert("No such user, please register first!")
+        } else {
+            var arrCookie = document.cookie.split('@');
+            var objUser = JSON.parse(arrCookie[0]);
+
+            if (accountName == objUser.uName && password == objUser.pwd) {
+                objUser.userLog = 1;
+                document.cookie = JSON.stringify(objUser) + "@" + arrCookie[1] + "@" + arrCookie[2];
+                location.reload()
+            } else {
+                alert("用户名或密码错误！");
+                return false;
+            }
+        }
+        // document.cookie += "uName=" + userName + "&" + "pwd=" + pwd;
+    }
+</script>
+
+
+</html>
